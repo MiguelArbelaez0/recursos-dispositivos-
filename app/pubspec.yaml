@@ -37,7 +37,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_sound_lite: ^8.5.0
   image_picker: ^1.0.4
-  
+  geolocator: ^10.1.0
+  record: ^5.0.1
+  audioplayers: 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
