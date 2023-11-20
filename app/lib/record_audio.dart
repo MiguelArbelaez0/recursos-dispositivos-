@@ -16,39 +16,17 @@ class _RecordAudioScreeenState extends State<RecordAudioScreeen> {
 
   String? audiopath;
 
-  Future startrecordAudio() async {
-    await record.start(const RecordConfig(), path: 'aFullPath/myFile.m4a');
-  }
+  Future<void> startrecordAudio() async {}
 
-  Future stoprecordAudio() async {
-    final path = await record.stop();
-  }
+  Future<void> stoprecordAudio() async {}
+
+  Future<void> playrecordAduio() async {}
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: showPlayer
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: AudioPlayer(
-                    source: audioPath!,
-                    onDelete: () {
-                      setState(() => showPlayer = false);
-                    },
-                  ),
-                )
-              : Recorder(
-                  onStop: (path) {
-                    if (kDebugMode) print('Recorded file path: $path');
-                    setState(() {
-                      audioPath = path;
-                      showPlayer = true;
-                    });
-                  },
-                ),
-        ),
+        appBar: AppBar(),
       ),
     );
   }
