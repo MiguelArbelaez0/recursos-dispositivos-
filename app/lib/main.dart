@@ -1,4 +1,5 @@
 import 'package:app/image.screen.dart';
+import 'package:app/record_audio.dart';
 import 'package:flutter/material.dart';
 
 import 'location_screen.dart';
@@ -27,6 +28,6 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: Locationccreen());
+        home: const RecordAudioScreeen());
   }
 }

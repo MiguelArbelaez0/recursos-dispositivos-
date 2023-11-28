@@ -12,21 +12,52 @@ class RecordAudioScreeen extends StatefulWidget {
 class _RecordAudioScreeenState extends State<RecordAudioScreeen> {
   final record = AudioRecorder();
 
-  bool showPlayer = false;
+  final player = AudioPlayer();
 
-  String? audiopath;
+  late final String? pathAudio;
 
-  Future<void> startrecordAudio() async {}
+  Future<void> startrecordAudio() async {
+    if (await record.hasPermission()) {
+      final stream = await record.startStream(const RecordConfig());
+    }
+  }
 
-  Future<void> stoprecordAudio() async {}
+  Future<void> stoprecordAudio() async {
+    pathAudio = await record.stop();
+    print(pathAudio);
+  }
 
-  Future<void> playrecordAduio() async {}
+  Future<void> playrecordAduio() async {
+    await player.play(DeviceFileSource(pathAudio!));
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                  onPressed: () async {
+                    await startrecordAudio();
+                  },
+                  child: Text("start")),
+              ElevatedButton(
+                  onPressed: () async {
+                    await stoprecordAudio();
+                  },
+                  child: Text("stop")),
+              ElevatedButton(
+                  onPressed: () async {
+                    await playrecordAduio();
+                  },
+                  child: Text("play")),
+            ],
+          ),
+        ),
       ),
     );
   }
