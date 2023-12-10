@@ -1,33 +1,56 @@
 import 'package:app/image.screen.dart';
 import 'package:app/record_audio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'audio_player.dart';
 import 'location_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() => runApp(const MyApp());
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class _MyAppState extends State<MyApp> {
+  bool showPlayer = false;
+  String? audioPath;
 
-  // This widget is the root of your application.
+  @override
+  void initState() {
+    showPlayer = false;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and the  n invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primarySwatch: Colors.blue,
+      home: Scaffold(
+        body: Center(
+          child: showPlayer
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: AudioPlayer(
+                    source: audioPath!,
+                    onDelete: () {
+                      setState(() => showPlayer = false);
+                    },
+                  ),
+                )
+              : Recorder(
+                  onStop: (path) {
+                    if (kDebugMode) print('Recorded file path: $path');
+                    setState(() {
+                      audioPath = path;
+                      showPlayer = true;
+                    });
+                  },
+                ),
         ),
-        home: const RecordAudioScreeen());
+      ),
+    );
   }
 }
